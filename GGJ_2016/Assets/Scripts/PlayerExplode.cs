@@ -3,7 +3,7 @@ using System.Collections;
 
 public class PlayerExplode : MonoBehaviour
 {
-    Collider[] m_collidersArray;
+    BoxCollider[] m_collidersArray;
     HingeJoint m_hingeJoint;
     
     public Transform m_explosionSource;
@@ -14,14 +14,10 @@ public class PlayerExplode : MonoBehaviour
 
     void Awake()
     {
-        m_collidersArray = GetComponentsInChildren<Collider>();
+        m_collidersArray = GetComponentsInChildren<BoxCollider>();
         m_hingeJoint = GetComponentInChildren<HingeJoint>();      
     }
-
-    void Start()
-    {
-        Explode();        
-    }
+    
 
     public void Explode()
     {
