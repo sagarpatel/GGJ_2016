@@ -14,11 +14,17 @@ public class PlayerExplode : MonoBehaviour
 
     GameObject m_playerBall;
 
+    AudioSource m_audioSource;
+    AudioDirector m_audioDirector;
+
     void Awake()
     {
         m_collidersArray = GetComponentsInChildren<BoxCollider>();
         m_hingeJoint = GetComponentInChildren<HingeJoint>();
         m_playerBall = GetComponentInChildren<PlayerBall>().gameObject;
+
+        m_audioSource = GetComponentInChildren<AudioSource>();
+        m_audioDirector = FindObjectOfType<AudioDirector>();
     }
     
 
@@ -37,6 +43,9 @@ public class PlayerExplode : MonoBehaviour
         Destroy(m_playerBall);
 
         yield return new WaitForSeconds(0.010f);
+
+        m_audioSource.pitch = Random.Range(0.5f, 1.5f);
+        m_audioSource.PlayOneShot(m_audioDirector.ExplosionSFX());
 
         Destroy(m_hingeJoint);
         
