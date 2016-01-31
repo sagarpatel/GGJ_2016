@@ -28,6 +28,7 @@ public class PlayersManager : MonoBehaviour
     public LifeBarManager m_lifeBarManager_2;
 
     GameOver m_gameOver;
+    CameraShake m_cameraShake;
 
     void Start()
     {
@@ -36,6 +37,7 @@ public class PlayersManager : MonoBehaviour
         m_lifeBarManager_1.GenerateLifeBar(m_maxLives, m_playerMaterial_1);
         m_lifeBarManager_2.GenerateLifeBar(m_maxLives, m_playerMaterial_2);
         m_gameOver = FindObjectOfType<GameOver>();
+        m_cameraShake = FindObjectOfType<CameraShake>();
     }
 
     void SpawnPlayers()
@@ -76,19 +78,19 @@ public class PlayersManager : MonoBehaviour
         else if (pIndex == 1)
             remainingLife = m_lifeBarManager_2.DecrementLife();
 
-        if(remainingLife == 0)
+        yield return new WaitForSeconds(1.0f);
+        firstKill.GetComponent<PlayerExplode>().Explode();
+        m_cameraShake.LaunchCameraShake(0.5f, 0.75f);
+
+        if (remainingLife == 0)
         {
             StartCoroutine(GameOverSequence());
             yield break;                
         }
 
-        yield return new WaitForSeconds(0.25f);
-
-        // TODO:  do slomo and cam shake here
-
-        firstKill.GetComponent<PlayerExplode>().Explode();
-
-        yield return new WaitForSeconds(1.0f);
+        
+        
+        yield return new WaitForSeconds(1.20f);
 
         m_player_1.GetComponent<PlayerMaterialSet>().SetDeadMaterial();
         m_player_2.GetComponent<PlayerMaterialSet>().SetDeadMaterial();
@@ -96,6 +98,7 @@ public class PlayersManager : MonoBehaviour
 
         yield return new WaitForSeconds(0.25f);
 
+        m_cameraShake.LaunchCameraShake(0.15f, 0.2f);
         // kill both again because i can't be bothered wit id system
         m_player_1.GetComponent<PlayerExplode>().Explode();
         m_player_2.GetComponent<PlayerExplode>().Explode();

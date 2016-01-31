@@ -45,9 +45,9 @@ public class GameOver : MonoBehaviour
             m_rbList[i].mass = 0.1f;
             m_rbList[i].isKinematic = false;
             m_rbList[i].useGravity = false;
-            m_rbList[i].drag = 0.75f;
+            m_rbList[i].drag = 0.85f;
             m_rbList[i].angularDrag = 0.7f;
-            m_rbList[i].AddExplosionForce(1000.0f, new Vector3(), 100.0f);            
+            m_rbList[i].AddExplosionForce(2000.0f, new Vector3(-1,0,0), 100.0f);            
         }
 
     }
