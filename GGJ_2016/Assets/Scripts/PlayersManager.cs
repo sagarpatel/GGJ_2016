@@ -116,7 +116,7 @@ public class PlayersManager : MonoBehaviour
 
         m_gameOver.ExplodeWorld();
 
-        yield return new WaitForSeconds(5.0f);
+        yield return new WaitForSeconds(7.0f);
 
         Application.LoadLevel(Application.loadedLevel);
 
