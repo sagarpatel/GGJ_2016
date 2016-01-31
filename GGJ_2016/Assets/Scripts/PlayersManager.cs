@@ -111,7 +111,7 @@ public class PlayersManager : MonoBehaviour
     {
         yield return new WaitForSeconds(3.0f);
 
-        m_gameOver.WorldExplode();
+        m_gameOver.ExplodeWorld();
 
         yield return new WaitForSeconds(5.0f);
 
