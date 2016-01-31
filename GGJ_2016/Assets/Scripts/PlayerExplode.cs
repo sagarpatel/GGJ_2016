@@ -12,10 +12,13 @@ public class PlayerExplode : MonoBehaviour
 
     bool m_hasExploded = false;
 
+    GameObject m_playerBall;
+
     void Awake()
     {
         m_collidersArray = GetComponentsInChildren<BoxCollider>();
-        m_hingeJoint = GetComponentInChildren<HingeJoint>();      
+        m_hingeJoint = GetComponentInChildren<HingeJoint>();
+        m_playerBall = GetComponentInChildren<PlayerBall>().gameObject;
     }
     
 
@@ -29,12 +32,16 @@ public class PlayerExplode : MonoBehaviour
 
     IEnumerator ExplosionSequence()
     {
+        gameObject.tag = "DeadPlayer";
+
+        Destroy(m_playerBall);
+
         yield return new WaitForSeconds(0.010f);
 
         Destroy(m_hingeJoint);
         
         for (int i = 0; i < m_collidersArray.Length; i++)
-        {
+        {            
             Rigidbody rb = m_collidersArray[i].GetComponent<Rigidbody>();
             if (rb == null)
             {

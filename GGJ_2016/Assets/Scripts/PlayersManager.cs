@@ -16,6 +16,7 @@ public class PlayersManager : MonoBehaviour
     GameObject m_player_2;
 
     int m_roundCount = 0;
+    bool m_isRespawnSequenceComplete = true;
 
     void Start()
     {
@@ -39,8 +40,30 @@ public class PlayersManager : MonoBehaviour
 
     public void KillPlayer(Transform playerTransform)
     {
-        playerTransform.GetComponent<PlayerExplode>().Explode();
+        if (m_isRespawnSequenceComplete == false)
+            return;
 
+        m_isRespawnSequenceComplete = false;
+        StartCoroutine(KillRespawnSequence(playerTransform));
     }
-    
+
+    IEnumerator KillRespawnSequence(Transform firstKill)
+    {
+
+        firstKill.GetComponent<PlayerExplode>().Explode();
+
+        yield return new WaitForSeconds(0.750f);
+
+        // kill both again because i can't be bothered wit id system
+        m_player_1.GetComponent<PlayerExplode>().Explode();
+        m_player_2.GetComponent<PlayerExplode>().Explode();
+
+        yield return new WaitForSeconds(3.0f);
+
+        SpawnPlayers();
+
+        m_isRespawnSequenceComplete = true;
+    }
+
+
 }
