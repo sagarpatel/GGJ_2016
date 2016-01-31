@@ -27,12 +27,15 @@ public class PlayersManager : MonoBehaviour
     public LifeBarManager m_lifeBarManager_1;
     public LifeBarManager m_lifeBarManager_2;
 
+    GameOver m_gameOver;
+
     void Start()
     {
         SpawnPlayers();
 
         m_lifeBarManager_1.GenerateLifeBar(m_maxLives, m_playerMaterial_1);
         m_lifeBarManager_2.GenerateLifeBar(m_maxLives, m_playerMaterial_2);
+        m_gameOver = FindObjectOfType<GameOver>();
     }
 
     void SpawnPlayers()
@@ -106,7 +109,11 @@ public class PlayersManager : MonoBehaviour
 
     IEnumerator GameOverSequence()
     {
-        yield return new WaitForSeconds(6.0f);
+        yield return new WaitForSeconds(3.0f);
+
+        m_gameOver.WorldExplode();
+
+        yield return new WaitForSeconds(5.0f);
 
         Application.LoadLevel(Application.loadedLevel);
 
