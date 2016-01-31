@@ -29,11 +29,9 @@ public class PlayerExplode : MonoBehaviour
 
     IEnumerator ExplosionSequence()
     {
-        yield return new WaitForSeconds(3.10f);
+        yield return new WaitForSeconds(0.10f);
 
         Destroy(m_hingeJoint);
-
-        
         
         for (int i = 0; i < m_collidersArray.Length; i++)
         {

@@ -8,7 +8,7 @@ public class PlayerMove : MonoBehaviour
 
     float m_moveSpeed = 40.0f;
     float m_moveFriction = 0.9f;
-    float m_jumpPower = 40000.0f;
+    float m_jumpPower = 200000.0f;
 
     void Start()
     {
