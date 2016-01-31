@@ -10,7 +10,7 @@ public class PlayerMaterialSet : MonoBehaviour
         Renderer[] renderersArray = GetComponentsInChildren<Renderer>();
         for(int i = 0; i < renderersArray.Length; i++)
         {
-            renderersArray[i].material = m_playerMaterial;
+            renderersArray[i].sharedMaterial = m_playerMaterial;
         }
 
         Light ballLight = GetComponentInChildren<Light>();
