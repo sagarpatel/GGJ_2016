@@ -22,9 +22,17 @@ public class PlayersManager : MonoBehaviour
     int m_roundCount = 0;
     bool m_isRespawnSequenceComplete = true;
 
+    int m_maxLives = 5;
+
+    public LifeBarManager m_lifeBarManager_1;
+    public LifeBarManager m_lifeBarManager_2;
+
     void Start()
     {
         SpawnPlayers();
+
+        m_lifeBarManager_1.GenerateLifeBar(m_maxLives, m_playerMaterial_1);
+        m_lifeBarManager_2.GenerateLifeBar(m_maxLives, m_playerMaterial_2);
     }
 
     void SpawnPlayers()
@@ -33,6 +41,7 @@ public class PlayersManager : MonoBehaviour
         m_player_1.GetComponent<PlayerMaterialSet>().m_aliveMaterial = m_playerMaterial_1;
         m_player_1.GetComponent<PlayerMaterialSet>().m_deadMaterial = m_playerMaterial_Dead_1;
         m_player_1.GetComponentInChildren<PlayerMove>().m_playerIndex = 0;
+        m_player_1.GetComponent<PlayerData>().m_playerIndex = 0;
         m_player_1.name = "Player_1";
 
 
@@ -40,6 +49,7 @@ public class PlayersManager : MonoBehaviour
         m_player_2.GetComponent<PlayerMaterialSet>().m_aliveMaterial = m_playerMaterial_2;
         m_player_2.GetComponent<PlayerMaterialSet>().m_deadMaterial = m_playerMaterial_Dead_2;
         m_player_2.GetComponentInChildren<PlayerMove>().m_playerIndex = 1;
+        m_player_2.GetComponent<PlayerData>().m_playerIndex = 1;
         m_player_2.name = "Player_2";
 
     }
@@ -56,6 +66,18 @@ public class PlayersManager : MonoBehaviour
     IEnumerator KillRespawnSequence(Transform firstKill)
     {
         firstKill.GetComponent<PlayerMaterialSet>().SetDeadMaterial();
+        int pIndex = firstKill.GetComponent<PlayerData>().m_playerIndex;
+        int remainingLife = 10000;
+        if (pIndex == 0)
+            remainingLife = m_lifeBarManager_1.DecrementLife();
+        else if (pIndex == 1)
+            remainingLife = m_lifeBarManager_2.DecrementLife();
+
+        if(remainingLife == 0)
+        {
+            StartCoroutine(GameOverSequence());
+            yield break;                
+        }
 
         yield return new WaitForSeconds(0.25f);
 
@@ -80,6 +102,14 @@ public class PlayersManager : MonoBehaviour
         SpawnPlayers();
 
         m_isRespawnSequenceComplete = true;
+    }
+
+    IEnumerator GameOverSequence()
+    {
+        yield return new WaitForSeconds(6.0f);
+
+        Application.LoadLevel(Application.loadedLevel);
+
     }
 
 
