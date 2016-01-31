@@ -12,6 +12,9 @@ public class PlayerMaterialSet : MonoBehaviour
         {
             renderersArray[i].material = m_playerMaterial;
         }
+
+        Light ballLight = GetComponentInChildren<Light>();
+        ballLight.color = m_playerMaterial.color;
     }
 
 
