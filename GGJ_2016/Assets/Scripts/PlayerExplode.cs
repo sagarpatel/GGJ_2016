@@ -53,6 +53,8 @@ public class PlayerExplode : MonoBehaviour
             rb.transform.parent = null;
             rb.isKinematic = false;
             rb.useGravity = false;
+            rb.drag = 0.2f;
+            rb.angularDrag = 0.1f;
             rb.AddExplosionForce(m_explosionForce, m_explosionSource.position, m_explosionRadius);
         }
         

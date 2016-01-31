@@ -47,7 +47,7 @@ public class GameOver : MonoBehaviour
             m_rbList[i].useGravity = false;
             m_rbList[i].drag = 0.85f;
             m_rbList[i].angularDrag = 0.7f;
-            m_rbList[i].AddExplosionForce(2000.0f, new Vector3(-1,0,0), 100.0f);            
+            m_rbList[i].AddExplosionForce(2000.0f, new Vector3(2,0,0), 100.0f);            
         }
 
     }
