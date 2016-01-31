@@ -6,9 +6,10 @@ public class PlayerMove : MonoBehaviour
     public int m_playerIndex = 0;
     Rigidbody m_bodyRigidbody;
 
-    float m_moveSpeed = 40.0f;
-    float m_moveFriction = 0.9f;
-    float m_jumpPower = 200000.0f;
+    float m_moveSpeed = 60.0f;
+    float m_speedClamp = 12.0f;
+    float m_moveFriction = 0.8f;
+    float m_jumpPower = 300000.0f;
 
     void Start()
     {
@@ -52,9 +53,15 @@ public class PlayerMove : MonoBehaviour
             m_bodyRigidbody.velocity += transform.forward * horizontal * m_moveSpeed * Time.deltaTime;            
         }
         Vector3 tempVel = m_bodyRigidbody.velocity;
-        tempVel *= m_moveFriction;
-        tempVel.y = m_bodyRigidbody.velocity.y;
-        m_bodyRigidbody.velocity = tempVel;
+
+        if (horizontal == 0)
+        {
+            tempVel *= m_moveFriction;
+            tempVel.y = m_bodyRigidbody.velocity.y;
+            m_bodyRigidbody.velocity = tempVel;
+        }
+
+        m_bodyRigidbody.velocity = Vector3.ClampMagnitude(m_bodyRigidbody.velocity, m_speedClamp);
 
         // need to implement cooldown
         Vector3 jumpForce = transform.up * up * m_jumpPower;
