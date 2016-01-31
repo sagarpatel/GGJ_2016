@@ -12,8 +12,7 @@ public class MiscSettingsDebug : MonoBehaviour
     void Update()
     {
         if (Input.GetKeyDown(KeyCode.Escape))
-            Application.LoadLevel(Application.loadedLevel)
-;
+            Application.LoadLevel(Application.loadedLevel);
     }
 
 }

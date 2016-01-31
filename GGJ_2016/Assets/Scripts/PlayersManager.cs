@@ -42,5 +42,5 @@ public class PlayersManager : MonoBehaviour
         playerTransform.GetComponent<PlayerExplode>().Explode();
 
     }
-
+    
 }
